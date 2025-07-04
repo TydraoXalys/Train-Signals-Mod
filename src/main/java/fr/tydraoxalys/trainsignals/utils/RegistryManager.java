@@ -41,8 +41,8 @@ public class RegistryManager {
      */
     public static ItemGroup register(Supplier<CustomGroup> constructor) {
         CustomGroup customGroup = constructor.get();
-        RegistryKey<ItemGroup> key = generateKey(Registries.ITEM_GROUP.getKey(), customGroup.getName());
-        
+        RegistryKey<ItemGroup> key = generateKey(Registries.ITEM_GROUP.getKey(), customGroup.getGroupName());
+
         return Registry.register(Registries.ITEM_GROUP, key, customGroup.getInstance());
     }
 

@@ -21,7 +21,7 @@ public class CustomGroup {
             .build();
     }
 
-    public String getName() {
+    public String getGroupName() {
         return this.name;
     }
 
