@@ -9,7 +9,13 @@ import net.minecraft.item.ItemGroup;
  * @author TydraoXalys
  */
 public class GroupManager {
-    public static final ItemGroup SIGNALS = RegistryManager.register(Signals::new);
+
+    public static final Signals SIGNALS = new Signals();
+    public static final ItemGroup SIGNALS_ITEMGROUP = 
+        RegistryManager.register(
+            SIGNALS.getInstance(), 
+            SIGNALS.getGroupName()
+        );
 
     public static void init() {}
 }
