@@ -3,9 +3,10 @@ package fr.tydraoxalys.trainsignals.utils;
 import java.util.function.Function;
 
 import fr.tydraoxalys.trainsignals.TrainSignals;
+import fr.tydraoxalys.trainsignals.groups.CustomGroup;
+import fr.tydraoxalys.trainsignals.items.blockitems.CustomBlockItem;
+import fr.tydraoxalys.trainsignals.items.items.CustomItem;
 import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -33,16 +34,15 @@ public class RegistryManager {
     }
 
     /**
-     * Instanciates an ItemGroup and add it into the registries.
-     * @param entry ItemGroup entry to add.
-     * @param name Group id.
-     * @return ItemGroup instance.
+     * Adds a custom group into the registries.
+     * @param entry Custom group object.
+     * @return ItemGroup instance corresponding to the custom group.
      */
-    public static ItemGroup register(ItemGroup entry, String name) {
+    public static ItemGroup register(CustomGroup customGroup) {
         return Registry.register(
             Registries.ITEM_GROUP, 
-            generateKey(Registries.ITEM_GROUP.getKey(), name), 
-            entry
+            generateKey(Registries.ITEM_GROUP.getKey(), customGroup.getGroupName()), 
+            customGroup.getInstance()
         );
     }
 
@@ -51,11 +51,11 @@ public class RegistryManager {
      * @param <T> Block object.
      * @param entry Block entry to add.
      * @param name Block id.
-     * @param itemConstructor BlockItem constructor (custom or not).
+     * @param itemConstructor CustomBlockItem constructor.
      * @return Block instance.
      */
-    public static <T extends Block> T register(T entry, String name, Function<T,BlockItem> itemConstructor) {
-        register(itemConstructor.apply(entry), name);
+    public static <T extends Block> T register(T entry, String name, Function<T,CustomBlockItem> itemConstructor) {
+        register(itemConstructor.apply(entry));
         return register(entry, name);
     }
 
@@ -77,15 +77,28 @@ public class RegistryManager {
     /**
      * Adds an item to the registries.
      * @param <T> Item object.
-     * @param entry Item entry to add.
-     * @param name Item id.
+     * @param customItem Item to add.
      * @return Item instance.
      */
-    public static <T extends Item> T register(T entry, String name) {
+    public static <T extends CustomItem> T register(T customItem) {
         return Registry.register(
             Registries.ITEM,
-            generateKey(Registries.ITEM.getKey(), name),
-            entry
+            generateKey(Registries.ITEM.getKey(), customItem.getItemName()),
+            customItem
+        );
+    }
+
+    /**
+     * Adds an item to the registries.
+     * @param <T> Item object.
+     * @param customBlockItem Item to add.
+     * @return Item instance.
+     */
+    public static <T extends CustomBlockItem> T register(T customBlockItem) {
+        return Registry.register(
+            Registries.ITEM,
+            generateKey(Registries.ITEM.getKey(), customBlockItem.getItemName()),
+            customBlockItem
         );
     }
 }

@@ -11,11 +11,7 @@ import net.minecraft.item.ItemGroup;
 public class GroupManager {
 
     public static final Signals SIGNALS = new Signals();
-    public static final ItemGroup SIGNALS_ITEMGROUP = 
-        RegistryManager.register(
-            SIGNALS.getInstance(), 
-            SIGNALS.getGroupName()
-        );
+    public static final ItemGroup SIGNALS_ITEMGROUP = RegistryManager.register(SIGNALS);
 
     public static void init() {}
 }
