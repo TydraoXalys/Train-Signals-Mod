@@ -1,10 +1,8 @@
 package fr.tydraoxalys.trainsignals.utils;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import fr.tydraoxalys.trainsignals.TrainSignals;
-import fr.tydraoxalys.trainsignals.groups.CustomGroup;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -36,14 +34,16 @@ public class RegistryManager {
 
     /**
      * Instanciates an ItemGroup and add it into the registries.
-     * @param constructor CustomGroup object constructor.
+     * @param entry ItemGroup entry to add.
+     * @param name Group id.
      * @return ItemGroup instance.
      */
-    public static ItemGroup register(Supplier<CustomGroup> constructor) {
-        CustomGroup customGroup = constructor.get();
-        RegistryKey<ItemGroup> key = generateKey(Registries.ITEM_GROUP.getKey(), customGroup.getGroupName());
-
-        return Registry.register(Registries.ITEM_GROUP, key, customGroup.getInstance());
+    public static ItemGroup register(ItemGroup entry, String name) {
+        return Registry.register(
+            Registries.ITEM_GROUP, 
+            generateKey(Registries.ITEM_GROUP.getKey(), name), 
+            entry
+        );
     }
 
     /**
