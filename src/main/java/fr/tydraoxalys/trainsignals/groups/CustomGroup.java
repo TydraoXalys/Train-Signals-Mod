@@ -1,7 +1,6 @@
 package fr.tydraoxalys.trainsignals.groups;
 
 import fr.tydraoxalys.trainsignals.TrainSignals;
-import fr.tydraoxalys.trainsignals.items.ItemManager;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -21,7 +20,14 @@ public class CustomGroup {
         this.name = name;
         this.instance = FabricItemGroup.builder()
             .displayName(Text.translatable("itemGroup.".concat(TrainSignals.MOD_ID + '.' + name)))
-            .icon(() -> new ItemStack(ItemManager.SEMAPHORE))
+            .build();
+    }
+
+    public CustomGroup(String name, ItemStack icon) {
+        this.name = name;
+        this.instance = FabricItemGroup.builder()
+            .displayName(Text.translatable("itemGroup.".concat(TrainSignals.MOD_ID + '.' + name)))
+            .icon(() -> icon)
             .build();
     }
 
